@@ -23,10 +23,21 @@ canvas.onmousedown = function(event) {
 
         document.addEventListener('mousemove', OnMouseMove)
 
-        canvas.onmouseup = function() {
+        function RemoveMouseMove() {
             document.removeEventListener('mousemove', OnMouseMove)
             canvas.onmouseup = null
         }
+
+        function StopMove() {
+            document.removeEventListener('mousemove', OnMouseMove)
+            canvas.onmouseup = null
+        }
+
+        canvas.onmouseup = StopMove
+
+        canvas.onmouseout = StopMove
+
+        window.onblur = StopMove
     }
 }
 
