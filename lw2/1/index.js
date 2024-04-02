@@ -35,7 +35,7 @@ canvas.onmousedown = function(event) {
 
         canvas.onmouseup = StopMove
 
-        canvas.onmouseout = StopMove
+        document.onmouseleave = StopMove
 
         window.onblur = StopMove
     }
