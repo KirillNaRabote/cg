@@ -1,0 +1,48 @@
+.letter-size {
+    width: 300px;
+    height: 700px;
+}
+
+#letter1 {
+    animation: jump1 2s infinite cubic-bezier(0.25, 0, 0, 0);
+}
+
+#letter2 {
+    animation: jump2 2s infinite cubic-bezier(1, 0, 0, 0);
+}
+
+#letter3 {
+    animation: jump3 2s infinite cubic-bezier(0.65, 0, 0, 0);
+}
+
+@keyframes jump1 {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes jump2 {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes jump3 {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.svg {
+    padding: 50px;
+    display: flex;
+}
