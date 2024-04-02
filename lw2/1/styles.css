@@ -10,10 +10,6 @@ body
     box-sizing: border-box;
 }
 
-nav ul li:hover > ul {
-    display:inherit;
-}
-
 .navigation
 {
     display: flex;
@@ -44,7 +40,8 @@ a
 
 a:hover
 {
-    background-color: beige;
+    background-color: #FFE4E1;
+    border-radius: 10px;
 }
 
 .navigation__element
@@ -55,7 +52,13 @@ a:hover
 
 .navigation__element_file
 {
+    margin-left: 20px;
     display: inline-block;
+}
+
+.navigation__element_file:hover
+{
+    border-radius: 0;
 }
 
 .navigation__drop-list_file
@@ -63,6 +66,7 @@ a:hover
     display: none;
     position: absolute;
     list-style: none;
+    background-color: #F0FFFF;
 }
 
 .navigation__element_file:hover .navigation__drop-list_file
@@ -77,3 +81,9 @@ a:hover
     display:list-item;
     position: relative;
 }
+
+/*
+.image_loader
+{
+    visibility: hidden;
+}*/
