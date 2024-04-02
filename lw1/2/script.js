@@ -1,6 +1,6 @@
-var svg = document.getElementById('house')
-var offsetX, offsetY = 0
-var isDragging = false
+let svg = document.getElementById('house')
+let offsetX, offsetY = 0
+let isDragging = false
 
 svg.addEventListener('mousedown', (event) => {
     if (event.button === 0) {
@@ -12,8 +12,8 @@ svg.addEventListener('mousedown', (event) => {
 
 svg.addEventListener('mousemove', (event) => {
     if (isDragging) {
-        var newX = event.clientX - offsetX
-        var newY = event.clientY - offsetY
+        let newX = event.clientX - offsetX
+        let newY = event.clientY - offsetY
 
         svg.style.left = newX + 'px'
         svg.style.top = newY + 'px'

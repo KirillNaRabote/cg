@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="index.js"></script>
+    <script src="index.js" defer></script>
 </head>
-<body >
+<body>
 <header>
     <nav class="navigation">
         <ul class="navigation__container">
             <li class="navigation__element navigation__element_file"><a href="#">File</a>
                 <ul class="navigation__drop-list_file">
-                    <li class="navigation__drop-list_file_element" id="new-bt"><a href="#">New</a></li>
-                    <li class="navigation__drop-list_file_element"><a href="#">Open</a></li>
-                    <li class="navigation__drop-list_file_element"><a href="#">Save as</a></li>
+                    <li class="navigation__drop-list_file_element" id="new-bt"><a href="">New</a></li>
+                    <li class="navigation__drop-list_file_element"><input class="image_loader" type="file" id="image_loader" accept="image/png, image/jpeg, image/bmp"/><a href="">Open</a></li>
+                    <li class="navigation__drop-list_file_element"><a href="">Save as</a></li>
                 </ul>
             </li>
             <li class="navigation__element"><a href="#">Help</a></li>
         </ul>
-        <input class="image_loader" type="file" id="image_loader" accept="image/png, image/jpeg, image/bmp" hidden/>
     </nav>
 </header>
+<canvas id="canvas"></canvas>
 </body>
 </html>

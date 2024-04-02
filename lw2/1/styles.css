@@ -82,8 +82,13 @@ a:hover
     position: relative;
 }
 
-/*
 .image_loader
 {
-    visibility: hidden;
-}*/
+    height: 100%;
+    width: 100%;
+    content-visibility: hidden;
+    position: absolute;
+    cursor: pointer;
+    z-index: 1;
+}
+
