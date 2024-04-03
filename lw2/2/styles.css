@@ -12,6 +12,7 @@ body
 
 .navigation
 {
+    z-index: 100;
     display: flex;
     background-color: #F0FFFF;
     border-radius: 15px;

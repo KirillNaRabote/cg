@@ -13,9 +13,9 @@ function drawCheckerboard() {
 function SetCanvasOptions() {
     canvas.classList.add("canvas-shadow")
     canvas.style.position = "absolute"
-    canvas.style.top = "50%"
     canvas.style.left = "50%"
-    canvas.style.transform = "translate(-50%, -50%)"
+    canvas.style.top = "240px"
+    canvas.style.transform = "translate(-50%, 0%)"
 }
 
 const LoadImage = () => {
@@ -27,6 +27,7 @@ const LoadImage = () => {
         img.onload = () => {
             canvas.width = img.width
             canvas.height = img.height
+
             if (file.type === 'image/png') {
                 ctx.save()
                 drawCheckerboard()
