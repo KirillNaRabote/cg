@@ -1,14 +1,11 @@
 const imageLoader = document.getElementById("image_loader")
 const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext('2d')
-let offsetX, offsetY = 0
-let isDragging = false
 
 canvas.onmousedown = function(event) {
     if (event.button === 0) {
-        isDragging = true
-        offsetX = event.clientX - canvas.getBoundingClientRect().left
-        offsetY = event.clientY - canvas.getBoundingClientRect().top
+        const offsetX = event.clientX - canvas.getBoundingClientRect().left
+        const offsetY = event.clientY - canvas.getBoundingClientRect().top
         canvas.style.position = 'absolute'
 
         MoveTo(event.pageX, event.pageY)
