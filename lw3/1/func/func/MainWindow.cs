@@ -7,7 +7,12 @@ namespace func;
 
 public class MainWindow: GameWindow
 {
-    private readonly FunctionGraph _funcGraph = new FunctionGraph(0.01f, -2.0f, 3.0f);
+    private const float WindowMinX = -10;
+    private const float WindowMaxX = 10;
+    private const float WindowMinY = -10;
+    private const float WindowMaxY = 10;
+ 
+    private readonly FunctionGraph _funcGraph = new FunctionGraph(0.01f, -2.0f, 3.0f, WindowMinX, WindowMaxX, WindowMinY, WindowMaxY);
     
     public MainWindow(GameWindowSettings gws, NativeWindowSettings nws) : base(gws, nws)
     {
@@ -36,6 +41,9 @@ public class MainWindow: GameWindow
         GL.MatrixMode(MatrixMode.Projection);
         GL.LoadIdentity();
         GL.Viewport(0, 0, w, h);
+
+        GL.Ortho(WindowMinX, WindowMaxX, WindowMinY, WindowMaxY, 1, -1);
+        
         
         base.OnResize(e);
     }

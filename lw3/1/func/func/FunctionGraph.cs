@@ -6,15 +6,31 @@ public class FunctionGraph
 {
     private List<Coordinates> Coords { get; set; } = [];
 
-    public FunctionGraph(float step, float xMin, float xMax)
+    private readonly float _step;
+    private readonly float _xMinForInterval;
+    private readonly float _xMaxForInterval;
+    private readonly float _windowMinX;
+    private readonly float _windowMaxX;
+    private readonly float _windowMinY;
+    private readonly float _windowMaxY;
+    
+    public FunctionGraph(float step, float xMinForInterval, float xMaxForInterval, float windowMinX, float windowMaxX, float windowMinY, float windowMaxY)
     {
-        FillXCoordinates(step, xMin, xMax);
+        _step = step;
+        _xMinForInterval = xMinForInterval;
+        _xMaxForInterval = xMaxForInterval;
+        _windowMinX = windowMinX;
+        _windowMaxX = windowMaxX;
+        _windowMinY = windowMinY;
+        _windowMaxY = windowMaxY;
+        
+        FillXCoordinates();
         CalculateYCoordinates();
     }
 
-    private void FillXCoordinates(float step, float xMin, float xMax)
+    private void FillXCoordinates()
     {
-        for (var x = xMin; x <= xMax; x += step)
+        for (var x = _xMinForInterval; x <= _xMaxForInterval; x += _step)
         {
             var coordinateX = new Coordinates
             {
@@ -44,26 +60,33 @@ public class FunctionGraph
         GL.Begin(PrimitiveType.LineStrip);
         foreach (var coordinate in Coords)
         {
-            GL.Vertex2(coordinate.X / 10, coordinate.Y / 10);
+            GL.Vertex2(coordinate.X, coordinate.Y);
         }
         GL.End();
     }
 
     private void DrawDivisions()
     {
-        const float axeLength = 2.0f;
-        const float divisionStep = axeLength / 20;
-        const float divisionWidth = 0.02f;
+        var axeXLength = _windowMaxX - _windowMinX;
+        var divisionXStep = axeXLength / 20;
+        
+        var axeYLength = _windowMaxY - _windowMinY;
+        var divisionYStep = axeYLength / 20;
+        
+        var divisionWidth = 0.1f;
         
         GL.Begin(PrimitiveType.Lines);
 
-        for (float coordinate = -1.0f; coordinate <= 1.0f; coordinate += divisionStep)
+        for (float coordinateX = _windowMinX; coordinateX <= _windowMaxX; coordinateX += divisionXStep)
         {
-            GL.Vertex2(coordinate, divisionWidth);
-            GL.Vertex2(coordinate, -divisionWidth);
-            
-            GL.Vertex2(-divisionWidth, coordinate);
-            GL.Vertex2(divisionWidth, coordinate);
+            GL.Vertex2(coordinateX, divisionWidth);
+            GL.Vertex2(coordinateX, -divisionWidth);
+        }
+        
+        for (float coordinateY = _windowMinY; coordinateY <= _windowMaxY; coordinateY += divisionYStep)
+        {
+            GL.Vertex2(-divisionWidth, coordinateY);
+            GL.Vertex2(divisionWidth, coordinateY);
         }
         
         GL.End();
@@ -71,22 +94,25 @@ public class FunctionGraph
 
     public void DrawCoordinateAxes()
     {
-        GL.Color3(0.0f, 0.0f, 0.0f);
+        const float arrowLength = 0.25f;
+        
+        GL.Color3(0.0, 0.0, 0.0);
+        GL.LineWidth(2.0f);
         GL.Begin(PrimitiveType.Lines);
         
-        GL.Vertex2(-1.0f,0.0f);
-        GL.Vertex2(1.0f,0.0f);
-        GL.Vertex2(1.0f,0.0f);
-        GL.Vertex2(0.95f,0.05f);
-        GL.Vertex2(1.0f,0.0f);
-        GL.Vertex2(0.95f,-0.05f);
+        GL.Vertex2(_windowMinX,0.0);
+        GL.Vertex2(_windowMaxX,0.0);
+        GL.Vertex2(_windowMaxX,0.0);
+        GL.Vertex2(_windowMaxX - arrowLength,arrowLength);
+        GL.Vertex2(_windowMaxX,0.0);
+        GL.Vertex2(_windowMaxX - arrowLength,-arrowLength);
         
-        GL.Vertex2(0.0f,-1.0f);
-        GL.Vertex2(0.0f,1.0f);
-        GL.Vertex2(0.0f,1.0f);
-        GL.Vertex2(0.05f,0.95f);
-        GL.Vertex2(0.0f,1.0f);
-        GL.Vertex2(-0.05f,0.95f);
+        GL.Vertex2(0.0,_windowMinY);
+        GL.Vertex2(0.0,_windowMaxY);
+        GL.Vertex2(0.0,_windowMaxY);
+        GL.Vertex2(arrowLength,_windowMaxY - arrowLength);
+        GL.Vertex2(0.0,_windowMaxY);
+        GL.Vertex2(-arrowLength,_windowMaxY - arrowLength);
         
         GL.End();
 
