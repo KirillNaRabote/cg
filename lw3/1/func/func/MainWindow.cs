@@ -38,12 +38,12 @@ public class MainWindow: GameWindow
     {
         int w = e.Width;
         int h = e.Height;
+
         GL.MatrixMode(MatrixMode.Projection);
         GL.LoadIdentity();
         GL.Viewport(0, 0, w, h);
 
-        GL.Ortho(WindowMinX, WindowMaxX, WindowMinY, WindowMaxY, 1, -1);
-        
+        GL.Ortho(WindowMinX, WindowMaxX, WindowMinY, WindowMaxY, 0, -1);
         
         base.OnResize(e);
     }
