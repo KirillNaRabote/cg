@@ -3,7 +3,10 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using smesharik;
-
+//вспомнить примитивы
+//сколько вершин нужно передать в триангл стрип чтобы нарисвоать 4 треугольника
+//исправить проблему драг н дропа
+//зачем нужна матрица проецирования
 var nws = new NativeWindowSettings()
 {
     //настройки окна

@@ -65,7 +65,7 @@ public class Kopatich
         float widthScale = 2.0f / _windowWidth;
         float heightScale = 2.0f / _windowHeight;
         
-        Console.WriteLine($"Scale {widthScale} {heightScale}");
+        //Console.WriteLine($"Scale {widthScale} {heightScale}");
 
         paramsInNcs.WidthInNcs = paramsInPixels.WidthInPixels / _windowWidth;
         paramsInNcs.HeightInNcs = paramsInPixels.HeightInPixels / _windowHeight;
@@ -73,7 +73,7 @@ public class Kopatich
         paramsInNcs.XcenterNcs = (paramsInPixels.CenterXInPixels - (float)_windowWidth / 2) * widthScale;
         paramsInNcs.YcenterNcs = (paramsInPixels.CenterYInPixels - (float)_windowHeight / 2) * heightScale;
         
-        Console.WriteLine($"{paramsInNcs.WidthInNcs} - {paramsInNcs.HeightInNcs}");
+        //Console.WriteLine($"{paramsInNcs.WidthInNcs} - {paramsInNcs.HeightInNcs}");
     }
     
     public void DrawKopatich()
