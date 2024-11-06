@@ -70,6 +70,7 @@ public class MainWindow : GameWindow
         
         GL.Ortho(-viewWidth * 0.5, viewWidth * 0.5, -viewHeight * 0.5, viewHeight * 0.5, -1, 1);
         //Console.WriteLine($"{viewWidth}   {viewHeight}");
+        
         base.OnResize(e);
     }
 
@@ -124,7 +125,7 @@ public class MainWindow : GameWindow
             _paramsInPixels.CenterXInPixels = _startPosition.X + _offset.X;
             _paramsInPixels.CenterYInPixels = _startPosition.Y + _offset.Y;
             
-            //Console.WriteLine($"offset {_offset.Y} start {_startDragPosition.Y}");
+             //Console.WriteLine($"offset {_offset.Y} start {_startDragPosition.Y}");
             
             _kopatich.UpdateParams(_paramsInPixels);
         }

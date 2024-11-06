@@ -30,22 +30,21 @@ public class MainWindow : GameWindow
         GL.Enable(EnableCap.DepthTest);
         GL.Enable(EnableCap.AlphaTest);
         
-        GL.Light(LightName.Light1, LightParameter.Position, new Vector4(0f, 10f, 5f, 0f));
-        GL.Light(LightName.Light1, LightParameter.Ambient, new Vector4(1f, 1f, 1f, 1f));
+        GL.Light(LightName.Light1, LightParameter.Ambient, new Vector4(0.2f, 0.2f, 0.2f, 1f));
         GL.Light(LightName.Light1, LightParameter.Diffuse, new Vector4(1f, 1f, 1f, 1f));
-        GL.Light(LightName.Light1, LightParameter.Specular, new OpenTK.Mathematics.Vector4(0f, 0f, 0f, 1f));
+        GL.Light(LightName.Light1, LightParameter.Specular, new Vector4(1f, 1f, 1f, 1f));
+        
 
         GL.Enable(EnableCap.Lighting);
         GL.Enable(EnableCap.Light1);
 
+        GL.Material(MaterialFace.Front, MaterialParameter.Diffuse, new Vector4(1f, 1f, 1f, 1f));
+        GL.Material(MaterialFace.Front, MaterialParameter.Specular, new Vector4(1f, 1f, 1f, 1f));
+        GL.Material(MaterialFace.Front, MaterialParameter.Shininess, 100f);
+        
         GL.Enable(EnableCap.ColorMaterial);
         GL.Enable(EnableCap.Blend);
-        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-
-        GL.Material(MaterialFace.Front, MaterialParameter.Diffuse, new Vector4(1, 1, 1, 1));
-        GL.Material(MaterialFace.Front, MaterialParameter.Ambient, new Vector4(0.2f, 0.2f, 0.2f, 1));
-        GL.Material(MaterialFace.Front, MaterialParameter.Specular, new Vector4(1f, 1f, 1f, 1));
-        GL.Material(MaterialFace.Front, MaterialParameter.Shininess, 1f);
+        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha); 
         
         GL.Translate(0f,0f,-5f);
     }
@@ -82,7 +81,7 @@ public class MainWindow : GameWindow
             -frustumWidth * 0.5, frustumWidth * 0.5,
             -frustumHeight * 0.5, frustumHeight * 0.5,
             frustumSize * 0.5, frustumSize * 10
-        ); 
+        );
     }
 
     protected override void OnUpdateFrame(FrameEventArgs args)
@@ -100,7 +99,20 @@ public class MainWindow : GameWindow
     {
         GL.MatrixMode(MatrixMode.Modelview);
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        
+        GL.PushMatrix();
+        GL.LoadIdentity();
+        
+        Vector4 lightPosition = new Vector4(0f, 0f, 1f, 1f);
+        GL.Light(LightName.Light1, LightParameter.Position, lightPosition);
+        
+        Vector3 spotDirection = new Vector3(0f, 0f, -1f); 
+        GL.Light(LightName.Light1, LightParameter.SpotDirection, new float[] { spotDirection.X, spotDirection.Y, spotDirection.Z });
+        GL.Light(LightName.Light1, LightParameter.SpotCutoff, 20f);
+        GL.Light(LightName.Light1, LightParameter.SpotExponent, 10f);
 
+        GL.PopMatrix();
+        
         GL.LineWidth(2);
         
         _icosahedron.Draw();
@@ -157,7 +169,7 @@ public class MainWindow : GameWindow
     private void NormalizeModelViewMatrix()
     {
         Matrix4 modelView;
-        GL.GetFloat(GetPName.ModelviewMatrix, out  modelView);
+        GL.GetFloat(GetPName.ModelviewMatrix, out modelView);
         
         Vector3 xAxis = new Vector3(modelView[0,0], modelView[1,0], modelView[2,0]);
         xAxis.Normalize();
