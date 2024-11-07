@@ -115,7 +115,7 @@ public class Icosahedron
 
             GL.Disable(EnableCap.CullFace);
             
-            //DrawNormals();
+            DrawNormals();
         }
         
         private void DrawNormals()
