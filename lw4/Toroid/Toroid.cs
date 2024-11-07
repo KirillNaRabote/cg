@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
 namespace Toroid;
-
+//для квад стрипа разобраться как вершины перечисляются
 public class Toroid
 {
     private readonly float _R;

@@ -155,7 +155,7 @@ public class MainWindow : GameWindow
         GL.MatrixMode(MatrixMode.Modelview);
 
         GL.GetFloat(GetPName.ModelviewMatrix, out Matrix4 modelView);
-
+        //почему икс и игре берутся по строкам, хотя координатный фрейм задается столбцами
         Vector3 xAxis = new Vector3(modelView[0, 0], modelView[1,0], modelView[2,0]);
         Vector3 yAxis = new Vector3(modelView[0, 1], modelView[1, 1], modelView[2, 1]);
 
