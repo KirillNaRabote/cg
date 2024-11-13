@@ -86,12 +86,14 @@ public class Cottage
         TextureMinFilter.LinearMipmapLinear,
         TextureWrapMode.Repeat,
         TextureWrapMode.Repeat);
+    //разобраться с текстуркой, можно продублировать пиксели на границах
+    //при рисовании неба отключить освещение
     private int skyTexture = Texture.LoadTexture(
         "images/sky.jpg", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
-        TextureWrapMode.Repeat,
-        TextureWrapMode.Repeat);
+        TextureWrapMode.ClampToEdge,
+        TextureWrapMode.ClampToEdge);
 
     public void Draw()
     {

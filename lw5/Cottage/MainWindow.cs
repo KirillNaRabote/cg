@@ -129,6 +129,7 @@ public class MainWindow : GameWindow
         yAxis = Vector3.Cross(zAxis, xAxis);
         yAxis.Normalize();
 
+        //почему берутся строки а не столбцы
         modelView[0, 0] = xAxis.X; modelView[1, 0] = xAxis.Y; modelView[2, 0] = xAxis.Z;
         modelView[0, 1] = yAxis.X; modelView[1, 1] = yAxis.Y; modelView[2, 1] = yAxis.Z;
         modelView[0, 2] = zAxis.X; modelView[1, 2] = zAxis.Y; modelView[2, 2] = zAxis.Z;
