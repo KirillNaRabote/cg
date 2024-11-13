@@ -5,21 +5,31 @@ namespace Cottage;
 
 public class Garage
 {
-    public int WallTexture { get; set; }
-    public int GarageDoorTexture { get; set; }
-    public int RootTexture { get; set; }
-    public int WindowTexture { get; set; }
-    public int AtticBoardsTexture { get; set; }
+    private int WallTexture { get; set; }
+    private int GarageDoorTexture { get; set; }
+    private int RoofTexture { get; set; }
+    private int WindowTexture { get; set; }
+    private int AtticBoardsTexture { get; set; }
 
-    public Box2 WallTextureCoord { get; set; } = new(0.25f, 0.25f, 1f, 1f);
-    public Box2 GarageDoorTextureCoord { get; set; } = new(0f, 0f, 1f, 1f);
-    public Box2 RootTextureCoord { get; set; } = new(0f, 0f, 1f, 1f);
-    public Box2 WindowTextureCoord { get; set; } = new(0f, 0f, 1f, 1f);
+    public Garage(int wallTexture, int garageDoorTexture, int roofTexture,int windowTexture, int atticBoardsTexture)
+    {
+        WallTexture = wallTexture;
+        GarageDoorTexture = garageDoorTexture;
+        RoofTexture = roofTexture;
+        WindowTexture = windowTexture;
+        AtticBoardsTexture = atticBoardsTexture;
+    }
 
-    public Box3 WallCoords { get; set; } = new(0f, -10f, 15f, 20f, 0f, -5f);
-    public Box3 GarageDoorCoords { get; set; } = new(5f, -10f, 15.1f, 15f, -1f, 15.1f);
-    public Box3 RootCoords { get; set; } = new(0f, 0f, 17f, 21f, 5f, -7f);
-    public Box3[] WindowsCoords { get; set; } =
+    private Box2 WallTextureBox { get; set; } = new(0.25f, 0.25f, 1f, 1f);
+    private Box2 GarageDoorTextureBox { get; set; } = new(0f, 0f, 1f, 1f);
+    private Box2 RoofTextureBox { get; set; } = new(0f, 0f, 1f, 1f);
+    private Box2 WindowTextureBox { get; set; } = new(0f, 0f, 1f, 1f);
+
+    private Box3 WallBox { get; set; } = new(0f, -10f, 15f, 20f, 0f, -5f);
+    private Box3 GarageDoorBox { get; set; } = new(5f, -10f, 15.1f, 15f, -1f, 15.1f);
+    private Box3 RoofBox { get; set; } = new(0f, 0f, 17f, 21f, 5f, -7f);
+
+    private Box3[] WindowsBoxes { get; set; } =
     {
         new Box3(20.1f, -8f, 5f, 20.1f, -1f, 9f),
         new Box3(20.1f, -8f, 1f, 20.1f, -1f, 5f),
@@ -44,60 +54,59 @@ public class Garage
         //задняя сторона
         GL.Normal3(0f, 0f, -1f);
 
-        GL.MultiTexCoord2(TextureUnit.Texture0, WallTextureCoord.Max.X, WallTextureCoord.Min.Y);
-        GL.Vertex3(WallCoords.Min.X, WallCoords.Max.Y, WallCoords.Min.Z);
+        GL.TexCoord2(WallTextureBox.Max.X, WallTextureBox.Min.Y);
+        GL.Vertex3(WallBox.Min.X, WallBox.Max.Y, WallBox.Min.Z);
 
-        GL.MultiTexCoord2(TextureUnit.Texture0, WallTextureCoord.Max.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Min.X, WallCoords.Min.Y, WallCoords.Min.Z);
+        GL.TexCoord2(WallTextureBox.Max.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Min.X, WallBox.Min.Y, WallBox.Min.Z);
 
-        GL.MultiTexCoord2(TextureUnit.Texture0, WallTextureCoord.Min.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Max.X, WallCoords.Min.Y, WallCoords.Min.Z);
+        GL.TexCoord2(WallTextureBox.Min.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Max.X, WallBox.Min.Y, WallBox.Min.Z);
 
-        GL.TexCoord2(WallTextureCoord.Max.Y, WallTextureCoord.Min.Y);
-        GL.MultiTexCoord2(TextureUnit.Texture0, WallTextureCoord.Min.X, WallTextureCoord.Min.Y);
-        GL.Vertex3(WallCoords.Max.X, WallCoords.Max.Y, WallCoords.Min.Z);
+        GL.TexCoord2(WallTextureBox.Min.X, WallTextureBox.Min.Y);
+        GL.Vertex3(WallBox.Max.X, WallBox.Max.Y, WallBox.Min.Z);
         //------------------------------------------------------
         //левая сторона
         GL.Normal3(-1f, 0f, 0f);
-        GL.TexCoord2(WallTextureCoord.Max.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Min.X, WallCoords.Min.Y, WallCoords.Min.Z);
+        GL.TexCoord2(WallTextureBox.Max.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Min.X, WallBox.Min.Y, WallBox.Min.Z);
 
-        GL.TexCoord2(WallTextureCoord.Max.X, WallTextureCoord.Min.Y);
-        GL.Vertex3(WallCoords.Min.X, WallCoords.Max.Y, WallCoords.Min.Z);
+        GL.TexCoord2(WallTextureBox.Max.X, WallTextureBox.Min.Y);
+        GL.Vertex3(WallBox.Min.X, WallBox.Max.Y, WallBox.Min.Z);
 
-        GL.TexCoord2(WallTextureCoord.Min.X, WallTextureCoord.Min.Y);
-        GL.Vertex3(WallCoords.Min.X, WallCoords.Max.Y, WallCoords.Max.Z);
+        GL.TexCoord2(WallTextureBox.Min.X, WallTextureBox.Min.Y);
+        GL.Vertex3(WallBox.Min.X, WallBox.Max.Y, WallBox.Max.Z);
 
-        GL.TexCoord2(WallTextureCoord.Min.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Min.X, WallCoords.Min.Y, WallCoords.Max.Z);
+        GL.TexCoord2(WallTextureBox.Min.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Min.X, WallBox.Min.Y, WallBox.Max.Z);
         //-------------------------------------------
         //передняя сторона
         GL.Normal3(0f, 0f, 1f);
-        GL.TexCoord2(WallTextureCoord.Min.X, WallTextureCoord.Min.Y);
-        GL.Vertex3(WallCoords.Min.X, WallCoords.Max.Y, WallCoords.Max.Z);
+        GL.TexCoord2(WallTextureBox.Min.X, WallTextureBox.Min.Y);
+        GL.Vertex3(WallBox.Min.X, WallBox.Max.Y, WallBox.Max.Z);
 
-        GL.TexCoord2(WallTextureCoord.Min.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Min.X, WallCoords.Min.Y, WallCoords.Max.Z);
+        GL.TexCoord2(WallTextureBox.Min.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Min.X, WallBox.Min.Y, WallBox.Max.Z);
 
-        GL.TexCoord2(WallTextureCoord.Max.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Max.X, WallCoords.Min.Y, WallCoords.Max.Z);
+        GL.TexCoord2(WallTextureBox.Max.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Max.X, WallBox.Min.Y, WallBox.Max.Z);
 
-        GL.TexCoord2(WallTextureCoord.Max.X, WallTextureCoord.Min.Y);
-        GL.Vertex3(WallCoords.Max.X, WallCoords.Max.Y, WallCoords.Max.Z);
+        GL.TexCoord2(WallTextureBox.Max.X, WallTextureBox.Min.Y);
+        GL.Vertex3(WallBox.Max.X, WallBox.Max.Y, WallBox.Max.Z);
         //--------------------------------------------------------
         //правая сторона
         GL.Normal3(1f, 0f, 0f);
-        GL.TexCoord2(WallTextureCoord.Max.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Max.X, WallCoords.Min.Y, WallCoords.Max.Z);
+        GL.TexCoord2(WallTextureBox.Max.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Max.X, WallBox.Min.Y, WallBox.Max.Z);
 
-        GL.TexCoord2(WallTextureCoord.Max.X, WallTextureCoord.Min.Y);
-        GL.Vertex3(WallCoords.Max.X, WallCoords.Max.Y, WallCoords.Max.Z);
+        GL.TexCoord2(WallTextureBox.Max.X, WallTextureBox.Min.Y);
+        GL.Vertex3(WallBox.Max.X, WallBox.Max.Y, WallBox.Max.Z);
 
-        GL.TexCoord2(WallTextureCoord.Min.X, WallTextureCoord.Min.Y);
-        GL.Vertex3(WallCoords.Max.X, WallCoords.Max.Y, WallCoords.Min.Z);
+        GL.TexCoord2(WallTextureBox.Min.X, WallTextureBox.Min.Y);
+        GL.Vertex3(WallBox.Max.X, WallBox.Max.Y, WallBox.Min.Z);
 
-        GL.TexCoord2(WallTextureCoord.Min.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Max.X, WallCoords.Min.Y, WallCoords.Min.Z);
+        GL.TexCoord2(WallTextureBox.Min.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Max.X, WallBox.Min.Y, WallBox.Min.Z);
 
         GL.End();
 
@@ -106,22 +115,22 @@ public class Garage
     private void DrawGarageRoof()
     {
         GL.ActiveTexture(TextureUnit.Texture0);
-        GL.BindTexture(TextureTarget.Texture2D, RootTexture);
+        GL.BindTexture(TextureTarget.Texture2D, RoofTexture);
         GL.Begin(PrimitiveType.Quads);
 
         GL.Normal3(1f, 1f, 0f);
-        GL.TexCoord2(RootTextureCoord.Max.X, RootTextureCoord.Max.Y);
-        GL.Vertex3(RootCoords.Max.X, RootCoords.Min.Y, RootCoords.Max.Z);
+        GL.TexCoord2(RoofTextureBox.Max.X, RoofTextureBox.Max.Y);
+        GL.Vertex3(RoofBox.Max.X, RoofBox.Min.Y, RoofBox.Max.Z);
 
-        GL.TexCoord2(RootTextureCoord.Min.X, RootTextureCoord.Max.Y);
-        GL.Vertex3(RootCoords.Max.X, RootCoords.Min.Y, RootCoords.Min.Z);
+        GL.TexCoord2(RoofTextureBox.Min.X, RoofTextureBox.Max.Y);
+        GL.Vertex3(RoofBox.Max.X, RoofBox.Min.Y, RoofBox.Min.Z);
 
-        GL.TexCoord2(RootTextureCoord.Min.X, RootTextureCoord.Min.Y);
-        GL.Vertex3(RootCoords.Min.X, RootCoords.Max.Y, RootCoords.Min.Z);
+        GL.TexCoord2(RoofTextureBox.Min.X, RoofTextureBox.Min.Y);
+        GL.Vertex3(RoofBox.Min.X, RoofBox.Max.Y, RoofBox.Min.Z);
 
 
-        GL.TexCoord2(RootTextureCoord.Max.X, RootTextureCoord.Min.Y);
-        GL.Vertex3(RootCoords.Min.X, RootCoords.Max.Y, RootCoords.Max.Z);
+        GL.TexCoord2(RoofTextureBox.Max.X, RoofTextureBox.Min.Y);
+        GL.Vertex3(RoofBox.Min.X, RoofBox.Max.Y, RoofBox.Max.Z);
 
         GL.End();
         
@@ -130,29 +139,29 @@ public class Garage
         GL.Begin(PrimitiveType.Triangles);
         GL.Normal3(0f, 0f, 1f);
 
-        GL.TexCoord2(WallTextureCoord.Min.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Min.X, WallCoords.Max.Y, WallCoords.Max.Z);
+        GL.TexCoord2(WallTextureBox.Min.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Min.X, WallBox.Max.Y, WallBox.Max.Z);
 
-        GL.TexCoord2(WallTextureCoord.Max.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Max.X, WallCoords.Max.Y, WallCoords.Max.Z);
+        GL.TexCoord2(WallTextureBox.Max.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Max.X, WallBox.Max.Y, WallBox.Max.Z);
 
         GL.TexCoord2(
-            WallTextureCoord.Min.X,
+            WallTextureBox.Min.X,
             0);
-        GL.Vertex3(RootCoords.Min.X, RootCoords.Max.Y, WallCoords.Max.Z);
+        GL.Vertex3(RoofBox.Min.X, RoofBox.Max.Y, WallBox.Max.Z);
         //-------------------------------------------
         GL.Normal3(0f, 0f, -1f);
 
-        GL.TexCoord2(WallTextureCoord.Min.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Min.X, WallCoords.Max.Y, WallCoords.Min.Z);
+        GL.TexCoord2(WallTextureBox.Min.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Min.X, WallBox.Max.Y, WallBox.Min.Z);
 
-        GL.TexCoord2(WallTextureCoord.Max.X, WallTextureCoord.Max.Y);
-        GL.Vertex3(WallCoords.Max.X, WallCoords.Max.Y, WallCoords.Min.Z);
+        GL.TexCoord2(WallTextureBox.Max.X, WallTextureBox.Max.Y);
+        GL.Vertex3(WallBox.Max.X, WallBox.Max.Y, WallBox.Min.Z);
 
         GL.TexCoord2(
-            WallTextureCoord.Min.X,
+            WallTextureBox.Min.X,
             0);
-        GL.Vertex3(RootCoords.Min.X, RootCoords.Max.Y, WallCoords.Min.Z);
+        GL.Vertex3(RoofBox.Min.X, RoofBox.Max.Y, WallBox.Min.Z);
         
         GL.End();
     }
@@ -164,19 +173,19 @@ public class Garage
 
         GL.Begin(PrimitiveType.Quads);
 
-        foreach (var window in WindowsCoords)
+        foreach (var window in WindowsBoxes)
         {
             SetNormalForWindow(window);
-            GL.TexCoord2(WindowTextureCoord.Max.X, WindowTextureCoord.Max.Y);
+            GL.TexCoord2(WindowTextureBox.Max.X, WindowTextureBox.Max.Y);
             GL.Vertex3(window.Min.X, window.Min.Y, window.Min.Z);
 
-            GL.TexCoord2(WindowTextureCoord.Max.X, WindowTextureCoord.Min.Y);
+            GL.TexCoord2(WindowTextureBox.Max.X, WindowTextureBox.Min.Y);
             GL.Vertex3(window.Min.X, window.Max.Y, window.Min.Z);
 
-            GL.TexCoord2(WindowTextureCoord.Min.X, WindowTextureCoord.Min.Y);
+            GL.TexCoord2(WindowTextureBox.Min.X, WindowTextureBox.Min.Y);
             GL.Vertex3(window.Max.X, window.Max.Y, window.Max.Z);
 
-            GL.TexCoord2(WindowTextureCoord.Min.X, WindowTextureCoord.Max.Y);
+            GL.TexCoord2(WindowTextureBox.Min.X, WindowTextureBox.Max.Y);
             GL.Vertex3(window.Max.X, window.Min.Y, window.Max.Z);
         }
 
@@ -186,19 +195,19 @@ public class Garage
 
     private void SetNormalForWindow(Box3 window)
     {
-        if (window.Max.Z >= WallCoords.Max.Z)
+        if (window.Max.Z >= WallBox.Max.Z)
         {
             GL.Normal3(0f, 0f, 1f);
         }
-        else if (window.Min.Z <= WallCoords.Min.Z)
+        else if (window.Min.Z <= WallBox.Min.Z)
         {
             GL.Normal3(0f, 0f, -1f);
         }
-        else if (window.Max.X >= WallCoords.Max.X)
+        else if (window.Max.X >= WallBox.Max.X)
         {
             GL.Normal3(1f, 0f, 0f);
         }
-        else if (window.Min.X <= WallCoords.Min.X)
+        else if (window.Min.X <= WallBox.Min.X)
         {
             GL.Normal3(-1f, 0f, 0f);
         }
@@ -214,17 +223,17 @@ public class Garage
         GL.Begin(PrimitiveType.Quads);
 
         GL.Normal3(0f, 0f, 1f);
-        GL.TexCoord2(GarageDoorTextureCoord.Max.X, GarageDoorTextureCoord.Max.Y);
-        GL.Vertex3(GarageDoorCoords.Min.X, GarageDoorCoords.Min.Y, GarageDoorCoords.Max.Z);
+        GL.TexCoord2(GarageDoorTextureBox.Max.X, GarageDoorTextureBox.Max.Y);
+        GL.Vertex3(GarageDoorBox.Min.X, GarageDoorBox.Min.Y, GarageDoorBox.Max.Z);
 
-        GL.TexCoord2(GarageDoorTextureCoord.Max.X, GarageDoorTextureCoord.Min.Y);
-        GL.Vertex3(GarageDoorCoords.Min.X, GarageDoorCoords.Max.Y, GarageDoorCoords.Max.Z);
+        GL.TexCoord2(GarageDoorTextureBox.Max.X, GarageDoorTextureBox.Min.Y);
+        GL.Vertex3(GarageDoorBox.Min.X, GarageDoorBox.Max.Y, GarageDoorBox.Max.Z);
 
-        GL.TexCoord2(GarageDoorTextureCoord.Min.X, GarageDoorTextureCoord.Min.Y);
-        GL.Vertex3(GarageDoorCoords.Max.X, GarageDoorCoords.Max.Y, GarageDoorCoords.Max.Z);
+        GL.TexCoord2(GarageDoorTextureBox.Min.X, GarageDoorTextureBox.Min.Y);
+        GL.Vertex3(GarageDoorBox.Max.X, GarageDoorBox.Max.Y, GarageDoorBox.Max.Z);
 
-        GL.TexCoord2(GarageDoorTextureCoord.Min.X, GarageDoorTextureCoord.Max.Y);
-        GL.Vertex3(GarageDoorCoords.Max.X, GarageDoorCoords.Min.Y, GarageDoorCoords.Max.Z);
+        GL.TexCoord2(GarageDoorTextureBox.Min.X, GarageDoorTextureBox.Max.Y);
+        GL.Vertex3(GarageDoorBox.Max.X, GarageDoorBox.Min.Y, GarageDoorBox.Max.Z);
         
         GL.End();
     }

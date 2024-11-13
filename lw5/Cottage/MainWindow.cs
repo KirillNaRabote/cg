@@ -38,22 +38,8 @@ public class MainWindow : GameWindow
 
         GL.Enable(EnableCap.Lighting);
 
-        GL.Light(LightName.Light1, LightParameter.Position, new Vector4(0f, 0f, 1f, 0f));
-        GL.Light(LightName.Light1, LightParameter.Diffuse, new Vector4(1f, 1f, 1f, 1f));
-        GL.Light(LightName.Light1, LightParameter.Ambient, new Vector4(0.2f, 0.2f, 0.2f, 1f));
-        GL.Light(LightName.Light1, LightParameter.Specular, new Vector4(1f, 1f, 1f, 1f));
-        GL.Light(LightName.Light0, LightParameter.Position, new Vector4(-1f, -1f, -1f, 0f));
-        GL.Light(LightName.Light0, LightParameter.Diffuse, new Vector4(1f, 1f, 1f, 1f));
-        GL.Light(LightName.Light0, LightParameter.Ambient, new Vector4(0.2f, 0.2f, 0.2f, 1f));
-        GL.Light(LightName.Light0, LightParameter.Specular, new Vector4(1f, 1f, 1f, 1f));
-
-
         GL.Enable(EnableCap.ColorMaterial);
-
-        GL.Material(MaterialFace.Front, MaterialParameter.Diffuse, new Vector4(0.8f, 0.8f, 0f, 1f));
         GL.Material(MaterialFace.Front, MaterialParameter.Ambient, new Vector4(0.2f, 0.2f, 0.2f, 1));
-        GL.Material(MaterialFace.Front, MaterialParameter.Specular, new Vector4(0.7f, 0.7f, 0.7f, 1));
-        GL.Material(MaterialFace.Front, MaterialParameter.Shininess, 100);
 
 
         GL.LoadIdentity();
@@ -105,6 +91,10 @@ public class MainWindow : GameWindow
 
         GL.GetFloat(GetPName.ModelviewMatrix, out Matrix4 modelView);
 
+        // Извлекаем из 1 и 2 строки матрицы камеры направления осей вращения,
+        // совпадающих с экранными осями X и Y.
+        // Строго говоря, для этого надо извлекать столбцы их обратной матрицы камеры, но так как
+        // матрица камеры ортонормированная, достаточно транспонировать её подматрицу 3*3
         Vector3 xAxis = new(modelView[0, 0], modelView[1, 0], modelView[2, 0]);
         Vector3 yAxis = new(modelView[0, 1], modelView[1, 1], modelView[2, 1]);
 
@@ -116,7 +106,7 @@ public class MainWindow : GameWindow
     private void NormalizeModelViewMatrix()
     {
         GL.GetFloat(GetPName.ModelviewMatrix, out Matrix4 modelView);
-
+        
         Vector3 xAxis = new(modelView[0, 0], modelView[1, 0], modelView[2, 0]);
         xAxis.Normalize();
         Vector3 yAxis = new(modelView[0, 1], modelView[1, 1], modelView[2, 1]);
@@ -128,8 +118,7 @@ public class MainWindow : GameWindow
         xAxis.Normalize();
         yAxis = Vector3.Cross(zAxis, xAxis);
         yAxis.Normalize();
-
-        //почему берутся строки а не столбцы
+        
         modelView[0, 0] = xAxis.X; modelView[1, 0] = xAxis.Y; modelView[2, 0] = xAxis.Z;
         modelView[0, 1] = yAxis.X; modelView[1, 1] = yAxis.Y; modelView[2, 1] = yAxis.Z;
         modelView[0, 2] = zAxis.X; modelView[1, 2] = zAxis.Y; modelView[2, 2] = zAxis.Z;

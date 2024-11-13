@@ -4,83 +4,73 @@ namespace Cottage;
 
 public class Cottage
 {
-    House house = new();
-    Garage garage = new();
-    Yard yard = new ();
-    Sky sky = new();
+    private readonly House _house;
+    private readonly Garage _garage;
+    private readonly Yard _yard;
+    private readonly Sky _sky;
 
     public bool ShowFog = false;
     
-    public Cottage() 
+    public Cottage()
     {
-        house.WallTexture = brickWallTexture;
-        house.DoorTexture = doorTexture;
-        house.RootTexture = rootTilesTexture;
-        house.GrafityTexture = grafityTexture;
-        house.WindowTexture = windowTexture;
-        house.AtticBoardsTexture = atticBoardsTexture;
+        _house = new House(_wallTexture, _doorTexture, _roofTexture, _graffitiTexture, _windowTexture, _atticBoardsTexture);
 
-        garage.WallTexture = brickWallTexture;
-        garage.GarageDoorTexture = garageDoorTexture;
-        garage.RootTexture = rootTilesTexture;
-        garage.WindowTexture = windowTexture;
-        garage.AtticBoardsTexture = atticBoardsTexture;
-
-        yard.GrassTexture = grassTexture;
-        yard.FenceTexture = fenceTexture;
-
-        sky.SkyTexture = skyTexture;
+        _garage = new Garage(_wallTexture, _garageDoorTexture, _roofTexture, _windowTexture, _atticBoardsTexture);
+        
+        _yard = new Yard(_grassTexture, _fenceTexture);
+        
+        _sky = new Sky(_skyTexture);
     }
 
-    private int brickWallTexture = Texture.LoadTexture(
+    private readonly int _wallTexture = Texture.LoadTexture(
         "images/brick-wall.jpg", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
         TextureWrapMode.Repeat,
         TextureWrapMode.Repeat);
-    private int doorTexture = Texture.LoadTexture(
+    private readonly int _doorTexture = Texture.LoadTexture(
         "images/door.jpg", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
         TextureWrapMode.Repeat,
         TextureWrapMode.Repeat);
-    private int garageDoorTexture = Texture.LoadTexture(
+    private readonly int _garageDoorTexture = Texture.LoadTexture(
         "images/garage-door.jpg", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
         TextureWrapMode.Repeat,
         TextureWrapMode.Repeat);
-    private int grassTexture = Texture.LoadTexture(
+    private readonly int _grassTexture = Texture.LoadTexture(
         "images/grass.jpg", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
         TextureWrapMode.Repeat,
         TextureWrapMode.Repeat);
-    private int windowTexture = Texture.LoadTexture(
+    private readonly int _windowTexture = Texture.LoadTexture(
         "images/window.jpg", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
         TextureWrapMode.Repeat,
         TextureWrapMode.Repeat);
-    private int rootTilesTexture = Texture.LoadTexture(
+    private readonly int _roofTexture = Texture.LoadTexture(
         "images/root-tiles.jpg", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
         TextureWrapMode.Repeat,
         TextureWrapMode.Repeat);
-    private int grafityTexture = Texture.LoadTexture(
+    private readonly int _graffitiTexture = Texture.LoadTexture(
         "images/grafity.gif", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
         TextureWrapMode.ClampToBorder,
         TextureWrapMode.ClampToBorder);
-    private int atticBoardsTexture = Texture.LoadTexture(
+    private readonly int _atticBoardsTexture = Texture.LoadTexture(
         "images/attic-boards.jpg", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
         TextureWrapMode.Repeat,
         TextureWrapMode.Repeat);
-    private int fenceTexture = Texture.LoadTexture(
+    private readonly int _fenceTexture = Texture.LoadTexture(
         "images/fence.jpg", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
@@ -88,7 +78,7 @@ public class Cottage
         TextureWrapMode.Repeat);
     //разобраться с текстуркой, можно продублировать пиксели на границах
     //при рисовании неба отключить освещение
-    private int skyTexture = Texture.LoadTexture(
+    private readonly int _skyTexture = Texture.LoadTexture(
         "images/sky.jpg", 
         TextureMagFilter.Linear,
         TextureMinFilter.LinearMipmapLinear,
@@ -110,18 +100,14 @@ public class Cottage
         GL.Fog(FogParameter.FogColor, new float[] { 0.5f, 0.5f, 0.5f, 0f });
         GL.Fog(FogParameter.FogDensity, 0.015f);
 
-        house.Draw();
-        garage.Draw();
-        yard.Draw();
+        _house.Draw();
+        _garage.Draw();
+        _yard.Draw();
         
-        GL.Enable(EnableCap.Light0);
-        GL.Enable(EnableCap.Light1);
+        GL.Disable(EnableCap.Lighting);
         
-        sky.Draw();
-
-        GL.Disable(EnableCap.Light0);
-        GL.Disable(EnableCap.Light1);
+        _sky.Draw();
         
-        GL.Disable(EnableCap.Fog);
+        GL.Enable(EnableCap.Lighting);
     }
 }
